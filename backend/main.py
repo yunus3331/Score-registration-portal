@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-#hello
+#hello there
 app = FastAPI()
 origins = [
     "http://localhost:3000",
