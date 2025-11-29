@@ -1,4 +1,5 @@
 import {useEffect,useState} from "react";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export default function App(){
     const [names, setNames] = useState([]);
     const [selectedName, setSelectedName] = useState("");
@@ -6,12 +7,12 @@ export default function App(){
     const [selectedLesson ,setSelectedLesson] = useState("");
     const [score ,setScore] =useState("");
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/names")
+        fetch(`${backendUrl}/names`)
           .then(res => res.json())
           .then(data => setNames(data.names))
           .catch(err => console.error(err));
     
-        fetch("http://127.0.0.1:8000/courses")
+        fetch(`${backendUrl}/courses`)
           .then(res => res.json())
           .then(data => setLessons(data.courses))
           .catch(err => console.error(err));
@@ -21,7 +22,7 @@ export default function App(){
         setScore("");
         return;
     }
-    fetch(`http://127.0.0.1:8000/score?a=${selectedName}&b=${selectedLesson}`)
+    fetch(`${backendUrl}/score?a=${selectedName}&b=${selectedLesson}`)
       .then((res) => res.json())
       .then((data) => setScore(data.score))
       .catch((err) => console.error(err));
@@ -29,7 +30,7 @@ export default function App(){
     
     function handleSubmit(e) {
       e.preventDefault();
-      fetch(`http://127.0.0.1:8000/change?esm=${selectedName}&lesson=${selectedLesson}&score=${Number(score)}`, {
+      fetch(`${backendUrl}/change?esm=${selectedName}&lesson=${selectedLesson}&score=${Number(score)}`, {
         method: "POST"
       }).then(() => {alert("Score successfully recorded.")})
     }
